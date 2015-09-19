@@ -1,0 +1,19 @@
+{
+  "name": "graphql-poc",
+  "version": "1.0.0",
+  "description": "graphql proof of concept",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jonathan Huang",
+  "license": "MIT",
+  "dependencies": {
+    "babel": "^5.8.23",
+    "express": "^4.13.3",
+    "express-graphql": "^0.3.0",
+    "graphql": "^0.4.4",
+    "nodemon": "^1.5.1",
+    "sqlite3": "^3.1.0"
+  }
+}
