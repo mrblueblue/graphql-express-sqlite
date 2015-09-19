@@ -1,39 +1,38 @@
 import {
   GraphQLObjectType,
   GraphQLSchema,
-  GraphQLInt
+  GraphQLString,
+  GraphQLNonNull,
+  GraphQLList
 } from 'graphql';
 
-let count = 0;
+import { userType } from './types';
+
+import User from './database';
 
 let Schema = new GraphQLSchema({
-  
+
   query: new GraphQLObjectType({
     name: 'RootQueryType',
     fields: {
-      count: {
-        type: GraphQLInt,
-        resolve: () => {
-          return count
-        }
-      }
-    }
-  }),
 
-  mutation: new GraphQLObjectType({
-    name: 'RootMutationType',
-    fields: {
-      updateCount: {
-        type: GraphQLInt,
-        description: 'Updates the count',
-        resolve: function() {
-          count += 1;
-          return count;
-        }
+      hello: {
+        type: GraphQLString,
+        resolve: () => 'world'
+      },
+
+      user: {
+        type: new GraphQLList(userType),
+        args: {
+          name: {
+            name: 'name',
+            type: GraphQLString
+          }
+        },
+        resolve: (rootValue, {name}) => User.filter((user) => user.name === name)
       }
     }
   })
-
 });
 
 export default Schema;
