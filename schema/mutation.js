@@ -1,10 +1,10 @@
 import { GraphQLObjectType, GraphQLString } from 'graphql';
 
 import { userType } from './types';
-import Users from '../database';
+import Users from '../database.js';
 import shortid from 'shortid'
 
-export default new GraphQLObjectType({
+const Mutation = new GraphQLObjectType({
   name: 'RootMutationType',
   fields: {
     createUser: {
@@ -16,7 +16,6 @@ export default new GraphQLObjectType({
         }
       },
       resolve: (rootValue, {name}) => {
-
         let newUser = {
           id: shortid.generate(),
           name: name,
@@ -24,9 +23,10 @@ export default new GraphQLObjectType({
         }
 
         Users.push(newUser);
-
         return newUser;
       }
     }
   }
-})
+});
+
+export default Mutation;
