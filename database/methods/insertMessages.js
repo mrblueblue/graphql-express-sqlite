@@ -1,3 +1,5 @@
+import {messages} from '../mockData';
+
 export default function insertMessages(db){
-  return db('messages').insert({user_id: 1, message: 'hello'})
+  return db('messages').insert(messages);
 }

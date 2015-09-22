@@ -7,7 +7,7 @@ let {log} = console;
 const db = knex({
   client: 'sqlite3',
   connection: {
-    filename: "./db.sqlite"
+    filename: './db.sqlite'
   }
 });
 
@@ -15,7 +15,7 @@ async function initialize(){
   await createTables(db);
   await insertUsers(db);
   await insertMessages(db);
-  return db.select('message').from('messages')
+  return db.select('created_at', 'text').from('messages')
     .then((rows) => log(rows));
 }
 

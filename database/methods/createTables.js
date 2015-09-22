@@ -7,11 +7,12 @@ export default async function createTables(db) {
 
     await db.schema.createTable('messages', function (table) {
       table.increments().primary();
-      table.string('message');
+      table.timestamp('created_at')
+      table.string('text');
       table.integer('user_id').references('id').inTable('users')
     });
 
   } catch(e){
-    console.log(e);
+    console.log('Database already exists!', e);
   }
 }

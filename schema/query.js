@@ -1,7 +1,7 @@
 import { GraphQLObjectType, GraphQLString, GraphQLList } from 'graphql';
 
 import { userType } from './types';
-import Users from '../database.js';
+import db from '../database/index';
 
 const Query = new GraphQLObjectType({
   name: 'RootQueryType',
@@ -18,7 +18,12 @@ const Query = new GraphQLObjectType({
           type: GraphQLString
         }
       },
-      resolve: (rootValue, {name} ) => Users.filter((user) => user.name === name)
+      resolve: async function(rootValue, {name} ){
+        let id = await db.where('name', name).select('id').from('users');
+            id = id[0].id
+        let messages = await db.where('user_id', id).select('text', 'created_at').from('messages');
+        return [{ id: id, name: name, messages: messages }];
+      }
     }
   }
 });
