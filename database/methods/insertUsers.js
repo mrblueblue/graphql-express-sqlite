@@ -2,7 +2,7 @@ import {promisify} from 'bluebird';
 
 function populateWithUsers(db){
 
-  let users = ['Time', 'Bob']
+  let users = ['Tim', 'Bob']
   let rows = users.map((user) => {
     return { name: user }
   });

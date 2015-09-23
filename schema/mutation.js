@@ -1,8 +1,6 @@
-import { GraphQLObjectType, GraphQLString } from 'graphql';
-
-import { userType } from './types';
-import Users from '../database.js';
-import shortid from 'shortid'
+import {GraphQLObjectType, GraphQLString} from 'graphql';
+import {userType, messageType} from './types';
+import {resolvePostMessage, resolveCreateUser} from './resolver';
 
 const Mutation = new GraphQLObjectType({
   name: 'RootMutationType',
@@ -15,16 +13,21 @@ const Mutation = new GraphQLObjectType({
           type: GraphQLString
         }
       },
-      resolve: (rootValue, {name}) => {
-        let newUser = {
-          id: shortid.generate(),
-          name: name,
-          messages: []
+      resolve: resolveCreateUser
+    },
+    postMessage: {
+      type: messageType,
+      args: {
+        name: {
+          name: 'name',
+          type: GraphQLString
+        },
+        text: {
+          name: 'text',
+          type: GraphQLString
         }
-
-        Users.push(newUser);
-        return newUser;
-      }
+      },
+      resolve: resolvePostMessage
     }
   }
 });
