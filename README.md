@@ -24,10 +24,19 @@ curl -XPOST -H 'Content-Type:application/graphql' \
 http://localhost:3000/graphql
 ```
 
-Create a new user named Kyle:
+Create a new user named Kerry:
 
 ```bash
 curl -XPOST -H 'Content-Type:application/graphql' \
--d 'mutation M { createUser(name: "Kyle") { name, id } }' \
+-d 'mutation M { createUser(name: "Kerry") { name } }' \
+http://localhost:3000/graphql
+```
+
+Post a new message from Kerry
+
+```bash
+
+curl -XPOST -H 'Content-Type:application/graphql' \
+-d 'mutation M { postMessage(name: "Kerry", text: "Hello I am Kerry") { text } }' \
 http://localhost:3000/graphql
 ```
