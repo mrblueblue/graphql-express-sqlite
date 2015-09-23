@@ -1,7 +1,8 @@
+import {prop, values, flatten, mapObjIndexed, map, compose, curry} from 'ramda';
+
 const mock = [
 
   {
-    id: 'xjc12',
     name: 'Bob',
     messages: [
       {created_at: new Date(), text: 'hello world'},
@@ -12,7 +13,6 @@ const mock = [
   },
 
   {
-    id: 'j9kl1',
     name: 'Tim',
     messages: [
       {created_at: new Date(), text: 'hello?'},
@@ -24,12 +24,18 @@ const mock = [
 
 ]
 
-export const users = mock.map((user) => {
-  return { name: user.name }
-});
+function addUserId(index, data){
+  data['user_id']=index;
+  return data;
+}
 
-export const messages = mock.reduce((accum, entry, index) => {
-  return accum.concat(entry.messages.map((message) => {
-    return { user_id: index + 1, text: message.text, created_at: message.created_at };
-  }));
-}, []);
+function addUserIdToMessages(value, index){
+  let addUserIdWithIndex = curry(addUserId)(++index);
+  return compose(map(addUserIdWithIndex), prop('messages'))(value);
+}
+
+let addUserIdToAllmessages = mapObjIndexed(addUserIdToMessages);
+let mapUserName = curry(map((data) => Object.create({name: data.name})));
+
+export const messages = compose(flatten, values, addUserIdToAllmessages)(mock);
+export const users = mapUserName(mock);

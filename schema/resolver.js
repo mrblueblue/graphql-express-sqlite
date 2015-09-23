@@ -38,8 +38,7 @@ export async function resolvePostMessage(rootValue, {name, text}){
 
 export async function resolveCreateUser(rootValue, {name}){
   let newUser = {name: name}
-    console.log(newUser)
-
+  
   await db('users').insert(newUser);
   return newUser;
 }
