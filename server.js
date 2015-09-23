@@ -1,7 +1,7 @@
 import express from 'express';
 import graphqlHTTP from 'express-graphql';
 import Schema from './schema';
-import db from './database/index.js';
+import db from './database';
 
 const app = express();
 let { log } = console;
