@@ -1,4 +1,4 @@
-# express-graphql-example
+# graphql-express-sqlite
 
 ## Getting Started
 
